@@ -13,23 +13,30 @@ router.get("/", (req, res) => {
 
 router.post("/url", [body('url').isURL()], async (req, res) => {
   const errors = validationResult(req);
-  if (!errors.isEmpty()) {
+  if (!errors.isEmpty()) 
+  {
     return res.status(422).send("invalid input");
   }
-  try {
+  try 
+  {
     let url = await Urls.findOne({
       url: req.body.url,
     });
-    if (url) {
+    if (url) 
+    {
       res.send(`${req.headers.origin}/sh/${url.short}`);
-    } else {
+    } 
+    else 
+    {
       url = new Urls({
         url: req.body.url,
       });
       await url.save();
       res.send(`${req.headers.origin}/sh/${url.short}`);
     }
-  } catch (e) {
+  } 
+  catch (e) 
+  {
     res.status(500).send(e);
   }
 });
